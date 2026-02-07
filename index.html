@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yashvi ❤️</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+
+body{
+  background: linear-gradient(180deg,#ff9a9e,#fad0c4);
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  overflow:hidden;
+}
+
+.container{
+  background:#fff;
+  width:100%;
+  max-width:420px;
+  margin:10px;
+  border-radius:25px;
+  padding:20px;
+  text-align:center;
+  box-shadow:0 15px 30px rgba(0,0,0,.25);
+  z-index:2;
+}
+
+h1{
+  color:#ff2f6d;
+  font-size:24px;
+}
+
+p{
+  color:#555;
+  font-size:15px;
+  margin-top:5px;
+}
+
+.slider{
+  width:100%;
+  aspect-ratio:9/16;
+  border-radius:18px;
+  overflow:hidden;
+  margin:15px 0;
+  background:#000;
+}
+
+.slider img,
+.slider video{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.buttons{
+  position:relative;
+  height:90px;
+  margin-top:10px;
+}
+
+button{
+  width:140px;
+  padding:14px 0;
+  font-size:18px;
+  border:none;
+  border-radius:30px;
+}
+
+#yes{
+  background:#ff2f6d;
+  color:white;
+  box-shadow:0 0 12px #ff2f6d;
+}
+
+#no{
+  background:#aaa;
+  color:white;
+  position:absolute;
+  right:0;
+  top:0;
+}
+
+#final{
+  display:none;
+  font-size:18px;
+  color:#ff2f6d;
+  margin-top:15px;
+  animation:pop .6s ease;
+}
+
+@keyframes pop{
+  from{transform:scale(.7);opacity:0}
+  to{transform:scale(1);opacity:1}
+}
+
+/* floating hearts */
+.heart{
+  position:absolute;
+  font-size:22px;
+  animation:float 4s linear forwards;
+}
+
+@keyframes float{
+  from{transform:translateY(0);opacity:1}
+  to{transform:translateY(-120px);opacity:0}
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <h1>Yashvi 💖</h1>
+  <p>Every moment with you feels like magic ✨</p>
+
+  <div class="slider" id="slider"></div>
+
+  <p>Will you be my Valentine? 🥺❤️</p>
+
+  <div class="buttons">
+    <button id="yes">YES 😍</button>
+    <button id="no">NO 😜</button>
+  </div>
+
+  <div id="final">
+    Yashvi 💖<br><br>
+    From the first smile to every little moment we share,<br>
+    you’ve made my world softer, brighter, and happier.<br><br>
+    I don’t want perfect days,<br>
+    I just want all my days with YOU.<br><br>
+    Will you be mine… today, tomorrow, always? 💍❤️
+  </div>
+</div>
+
+<script>
+// slider (photos + videos)
+const slides=[
+  {type:"img",src:"photos/1.jpg"},
+  {type:"video",src:"videos/1.mp4"},
+  {type:"img",src:"photos/2.jpg"},
+  {type:"video",src:"videos/2.mp4"},
+  {type:"img",src:"photos/3.jpg"}
+];
+
+let i=0;
+const slider=document.getElementById("slider");
+
+function show(){
+  slider.innerHTML="";
+  const s=slides[i];
+
+  if(s.type==="img"){
+    const img=document.createElement("img");
+    img.src=s.src;
+    slider.appendChild(img);
+    setTimeout(next,2500);
+  }else{
+    const v=document.createElement("video");
+    v.src=s.src;
+    v.autoplay=true;
+    v.muted=true;
+    v.playsInline=true;
+    slider.appendChild(v);
+    v.onended=next;
+  }
+}
+function next(){
+  i=(i+1)%slides.length;
+  show();
+}
+show();
+
+// no button escape
+const no=document.getElementById("no");
+const yes=document.getElementById("yes");
+let grow=18;
+
+function escape(){
+  no.style.right=Math.random()*120+"px";
+  no.style.top=Math.random()*40+"px";
+  grow+=2;
+  yes.style.fontSize=grow+"px";
+}
+
+no.ontouchstart=escape;
+no.onmouseover=escape;
+
+// heart burst
+function hearts(){
+  for(let i=0;i<12;i++){
+    const h=document.createElement("div");
+    h.className="heart";
+    h.innerHTML="❤️";
+    h.style.left=Math.random()*100+"vw";
+    h.style.top="80vh";
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(),4000);
+  }
+}
+
+// yes click with delay
+yes.onclick=()=>{
+  hearts();
+  setTimeout(()=>{
+    document.getElementById("final").style.display="block";
+  },2000);
+};
+</script>
+
+</body>
+</html>
