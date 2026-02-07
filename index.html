@@ -6,28 +6,29 @@
 <title>Yashvi ❤️</title>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
 
 body{
   background: linear-gradient(180deg,#ff9a9e,#fad0c4);
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
   min-height:100vh;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  overflow:hidden;
+  overflow:auto;
+  padding:20px;
 }
 
 .container{
   background:#fff;
   width:100%;
   max-width:420px;
-  margin:10px;
+  margin:auto;
   border-radius:25px;
   padding:20px;
   text-align:center;
   box-shadow:0 15px 30px rgba(0,0,0,.25);
-  z-index:2;
 }
 
 h1{
@@ -38,7 +39,7 @@ h1{
 p{
   color:#555;
   font-size:15px;
-  margin-top:5px;
+  margin:8px 0;
 }
 
 .slider{
@@ -87,9 +88,9 @@ button{
 
 #final{
   display:none;
-  font-size:18px;
+  font-size:17px;
   color:#ff2f6d;
-  margin-top:15px;
+  margin-top:20px;
   animation:pop .6s ease;
 }
 
@@ -98,9 +99,9 @@ button{
   to{transform:scale(1);opacity:1}
 }
 
-/* floating hearts */
+/* Floating hearts */
 .heart{
-  position:absolute;
+  position:fixed;
   font-size:22px;
   animation:float 4s linear forwards;
 }
@@ -138,76 +139,79 @@ button{
 </div>
 
 <script>
-// slider (photos + videos)
-const slides=[
-  {type:"img",src:"photos/1.jpg"},
-  {type:"video",src:"videos/1.mp4"},
-  {type:"img",src:"photos/2.jpg"},
-  {type:"video",src:"videos/2.mp4"},
-  {type:"img",src:"photos/3.jpg"}
+/* SLIDER CONTENT */
+const slides = [
+  {type:"img", src:"Photos/1.jpg"},
+  {type:"video", src:"Videos/1.mp4"},
+  {type:"img", src:"Photos/2.jpg"},
+  {type:"video", src:"Videos/2.mp4"},
+  {type:"img", src:"Photos/3.jpg"}
 ];
 
-let i=0;
-const slider=document.getElementById("slider");
+let index = 0;
+const slider = document.getElementById("slider");
 
-function show(){
-  slider.innerHTML="";
-  const s=slides[i];
+function showSlide(){
+  slider.innerHTML = "";
+  const s = slides[index];
 
-  if(s.type==="img"){
-    const img=document.createElement("img");
-    img.src=s.src;
+  if(s.type === "img"){
+    const img = document.createElement("img");
+    img.src = s.src;
     slider.appendChild(img);
-    setTimeout(next,2500);
-  }else{
-    const v=document.createElement("video");
-    v.src=s.src;
-    v.autoplay=true;
-    v.muted=true;
-    v.playsInline=true;
+    setTimeout(nextSlide, 2500);
+  } else {
+    const v = document.createElement("video");
+    v.src = s.src;
+    v.autoplay = true;
+    v.muted = true;
+    v.playsInline = true;
     slider.appendChild(v);
-    v.onended=next;
+    v.onended = nextSlide;
   }
 }
-function next(){
-  i=(i+1)%slides.length;
-  show();
-}
-show();
 
-// no button escape
-const no=document.getElementById("no");
-const yes=document.getElementById("yes");
-let grow=18;
+function nextSlide(){
+  index = (index + 1) % slides.length;
+  showSlide();
+}
+
+showSlide();
+
+/* NO BUTTON ESCAPE */
+const no = document.getElementById("no");
+const yes = document.getElementById("yes");
+let grow = 18;
 
 function escape(){
-  no.style.right=Math.random()*120+"px";
-  no.style.top=Math.random()*40+"px";
-  grow+=2;
-  yes.style.fontSize=grow+"px";
+  no.style.right = Math.random() * 120 + "px";
+  no.style.top = Math.random() * 40 + "px";
+  grow += 2;
+  yes.style.fontSize = grow + "px";
 }
 
-no.ontouchstart=escape;
-no.onmouseover=escape;
+no.ontouchstart = escape;
+no.onmouseover = escape;
 
-// heart burst
+/* HEART EFFECT */
 function hearts(){
-  for(let i=0;i<12;i++){
-    const h=document.createElement("div");
-    h.className="heart";
-    h.innerHTML="❤️";
-    h.style.left=Math.random()*100+"vw";
-    h.style.top="80vh";
+  for(let i=0;i<15;i++){
+    const h = document.createElement("div");
+    h.className = "heart";
+    h.innerHTML = "❤️";
+    h.style.left = Math.random()*100 + "vw";
+    h.style.top = "85vh";
     document.body.appendChild(h);
     setTimeout(()=>h.remove(),4000);
   }
 }
 
-// yes click with delay
-yes.onclick=()=>{
+/* YES CLICK */
+yes.onclick = ()=>{
   hearts();
   setTimeout(()=>{
-    document.getElementById("final").style.display="block";
+    document.getElementById("final").style.display = "block";
+    document.getElementById("final").scrollIntoView({behavior:"smooth"});
   },2000);
 };
 </script>
